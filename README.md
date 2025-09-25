@@ -1,66 +1,16 @@
-## Foundry
+## Repo to reproduce an issue within `forge doc`
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+`forge doc` does not support overloaded functions in interfaces properly.
+The doc generated for the interface is correct, but the doc for the contract uses the NatSpecs of the first function it finds with the same name in the interface.
 
-Foundry consists of:
+### Repro steps
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+* run `forge doc --serve`
+* go to http://localhost:3000/src/ICounter.sol/interface.ICounter.html
+    * the doc for the `increment` functions are correct
+* go to http://localhost:3000/src/Counter.sol/contract.Counter.html
+    * the doc for the `increment` functions is the same 
 
-## Documentation
+### Link ot the issue
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+https://github.com/foundry-rs/foundry/issues/11823
